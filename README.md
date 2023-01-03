@@ -24,3 +24,8 @@
    1. review schema
    2. product schema
    3. product model
+
+8. Create user model
+
+   1. user schema
+   2. user model
