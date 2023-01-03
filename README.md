@@ -14,3 +14,13 @@
 5. Install React Responsive Carousel
 
    1. npm i react-responsive-carousel
+
+6. Create StoreProvider
+
+   1. create Store.jsx
+
+7. Create product model
+
+   1. review schema
+   2. product schema
+   3. product model

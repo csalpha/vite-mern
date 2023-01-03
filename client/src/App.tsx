@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import logo from "./assets/react.svg";
 import reactLogo from "./assets/react.svg";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
@@ -9,44 +9,51 @@ import { AiOutlineClose } from "react-icons/ai";
 import HomeScreen from "./screens/HomeScreen";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import { Store } from "./Store";
 
 // [] {}
 
-const App = () => {
+function App() {
   const [toggleMenu, setToggleMenu] = useState(false);
 
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const { data } = await axios.get(`api/products/`);
-        setProducts(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchProducts();
-  }, []);
+  const { state, dispatch: ctxDispatch } = useContext(Store);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const { data } = await axios.get(`api/users/`);
-        setUsers(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchUsers();
-  }, []);
+  const { cart, userInfo } = state;
 
-  console.log("products: ");
-  console.log(products);
+  const { cartItems } = cart;
 
-  console.log("users: ");
-  console.log(users);
+  // // useEffect(() => {
+  // //   const fetchProducts = async () => {
+  // //     try {
+  // //       const { data } = await axios.get(`api/products/`);
+  // //       setProducts(data);
+  // //     } catch (err) {
+  // //       console.log(err);
+  // //     }
+  // //   };
+  // //   fetchProducts();
+  // // }, []);
+
+  // // useEffect(() => {
+  // //   const fetchUsers = async () => {
+  // //     try {
+  // //       const { data } = await axios.get(`api/users/`);
+  // //       setUsers(data);
+  // //     } catch (error) {
+  // //       console.log(error);
+  // //     }
+  // //   };
+  // //   fetchUsers();
+  // // }, []);
+
+  // // console.log("products: ");
+  // // console.log(products);
+
+  // // console.log("users: ");
+  // // console.log(users);
 
   return (
     <BrowserRouter>
@@ -117,6 +124,6 @@ const App = () => {
       </div>
     </BrowserRouter>
   );
-};
+}
 
 export default App;
