@@ -6,6 +6,9 @@ import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
+import HomeScreen from "./screens/HomeScreen";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 // [] {}
 
@@ -106,10 +109,10 @@ const App = () => {
           </nav>
         </header>
         <main className='container mt-3'>
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4'>
-            <div className='card'></div>
-          </div>
-          <Routes></Routes>
+          <Carousel showArrows autoPlay showThumbs={false}></Carousel>
+          <Routes>
+            <Route path='/' element={<HomeScreen />}></Route>
+          </Routes>
         </main>
       </div>
     </BrowserRouter>

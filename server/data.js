@@ -59,6 +59,7 @@ const data = {
   // products - array of objects
   products: [
     {
+      _id: 1,
       name: "PS5 Digital Edition",
       slug: "ps5-digital-edition",
       category: "Consoles",
@@ -71,6 +72,7 @@ const data = {
       description: "high quality product",
     },
     {
+      _id: 2,
       name: "PS5 Standard Edition",
       slug: "ps5-standard-edition",
       category: "Consoles",
@@ -83,6 +85,7 @@ const data = {
       description: "high quality product",
     },
     {
+      _id: 3,
       name: "Xbox Series X",
       slug: "xbox-series-x",
       category: "Consoles",
@@ -95,6 +98,7 @@ const data = {
       description: "high quality product",
     },
     {
+      _id: 4,
       name: "Xbox Series S",
       slug: "xbox-series-s",
       category: "Consoles",
@@ -107,6 +111,7 @@ const data = {
       description: "high quality product",
     },
     {
+      _id: 5,
       name: "Nintendo Switch",
       slug: "nintendo-switch",
       category: "Consoles",
