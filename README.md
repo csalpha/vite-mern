@@ -29,3 +29,5 @@
 
    1. user schema
    2. user model
+
+9. List Products

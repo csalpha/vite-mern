@@ -57,7 +57,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className='min-h-screen'>
+      <div className='flex min-h-screen flex-col justify-between '>
         <Helmet>
           <title>Vite</title>
         </Helmet>
@@ -115,7 +115,7 @@ function App() {
             </div>
           </nav>
         </header>
-        <main className='container mt-3'>
+        <main className='container m-auto mt-4 px-4'>
           <Carousel showArrows autoPlay showThumbs={false}></Carousel>
           <Routes>
             <Route path='/' element={<HomeScreen />}></Route>

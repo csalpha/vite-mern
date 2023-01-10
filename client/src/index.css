@@ -33,6 +33,28 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
+a {
+  @apply text-blue-600 hover:text-blue-800;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.card {
+  @apply mb-5  block   rounded-lg border border-gray-200  shadow-md;
+}
+
+/* create primary-button class */
+.primary-button {
+  @apply rounded bg-amber-300 py-2 px-4 shadow outline-none hover:bg-amber-400  active:bg-amber-500;
+}
+
+/* create default-button class */
+/* .default-button {
+  @apply rounded bg-gray-100 py-2  px-4 text-black shadow outline-none hover:bg-gray-200  active:bg-gray-300;
+} */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
