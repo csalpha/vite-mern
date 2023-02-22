@@ -9,16 +9,14 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get("/api/products");
-      setProduct(data);
+      // This code is using the Axios library to make an HTTP GET request to a server endpoint "/api/products/top-products"
+      const { data: products } = await axios.get("/api/products/top-products");
+      setProduct(products);
     };
     fetchData();
-    return () => {
-      //
-    };
+    return () => {};
   }, []);
 
-  console.log(products);
   return (
     <div>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4'>
