@@ -1,8 +1,7 @@
 import express from "express";
 // // import data from "./data.js";
 import productRouter from "./routes/productRoutes.js";
-import Product from "./models/productModel.js";
-import User from "./models/userModel.js";
+import userRouter from "./routes/userRoutes.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
@@ -26,6 +25,8 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/api/products", productRouter);
+
+app.use("/api/users", userRouter);
 
 app.listen(port, () => {
   console.log(`Serve at http://localhost:${port}`);

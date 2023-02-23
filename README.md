@@ -31,3 +31,5 @@
    2. user model
 
 9. List Products
+
+   1. get products from MongoDB
