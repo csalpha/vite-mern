@@ -33,3 +33,10 @@
 9. List Products
 
    1. get products from MongoDB
+
+10. Build Sellers Carousel
+
+    1. get sellers from MongoDB
+    2. build sellers carousel
+
+11. Build Product Screen

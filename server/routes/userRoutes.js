@@ -11,8 +11,9 @@ userRouter.get(
   expressAsyncHandler(async (req, res) => {
     // query the database for the top three sellers by rating
     const topSellers = await User.find({ isSeller: true })
+      //sorts the sellers in descending order based on their "rating" field
       .sort({ "seller.rating": -1 })
-      .limit(3);
+      .limit(3); //limits the results to the top 3 sellers
     // send a response
     res.send(topSellers);
   })

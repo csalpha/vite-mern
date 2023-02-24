@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 // {} []
 
 const HomeScreen = () => {
-  const [products, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
   const [sellers, setSellers] = useState([]);
 
   useEffect(() => {
@@ -19,18 +19,16 @@ const HomeScreen = () => {
 
       // This code is using the Axios library to make an HTTP GET request to a server endpoint "/api/products/top-products"
       const { data: products } = await axios.get("/api/products/top-products");
-      setProduct(products);
+      setProducts(products);
     };
     fetchData();
     return () => {};
   }, []);
 
-  console.log(sellers);
-
   return (
     <div>
-      <div>
-        <h2 className='flex flex-row'></h2>
+      <div className='py-2'>
+        <h2 className=''>Top Sellers</h2>
       </div>
       <div className=''>
         <Carousel showArrows autoPlay showThumbs={false}>
@@ -44,8 +42,8 @@ const HomeScreen = () => {
           ))}
         </Carousel>
       </div>
-      <div>
-        <h2 className='flex flex-row'></h2>
+      <div className='py-2'>
+        <h2 className=''>Top Products</h2>
       </div>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4'>
         {products.map((product) => (

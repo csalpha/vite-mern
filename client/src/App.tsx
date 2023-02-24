@@ -7,6 +7,7 @@ import axios from "axios";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import HomeScreen from "./screens/HomeScreen";
+import ProductScreen from "./screens/ProductScreen";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { Store } from "./Store";
@@ -24,36 +25,6 @@ function App() {
   const { cart, userInfo } = state;
 
   const { cartItems } = cart;
-
-  // // useEffect(() => {
-  // //   const fetchProducts = async () => {
-  // //     try {
-  // //       const { data } = await axios.get(`api/products/`);
-  // //       setProducts(data);
-  // //     } catch (err) {
-  // //       console.log(err);
-  // //     }
-  // //   };
-  // //   fetchProducts();
-  // // }, []);
-
-  // // useEffect(() => {
-  // //   const fetchUsers = async () => {
-  // //     try {
-  // //       const { data } = await axios.get(`api/users/`);
-  // //       setUsers(data);
-  // //     } catch (error) {
-  // //       console.log(error);
-  // //     }
-  // //   };
-  // //   fetchUsers();
-  // // }, []);
-
-  // // console.log("products: ");
-  // // console.log(products);
-
-  // // console.log("users: ");
-  // // console.log(users);
 
   return (
     <BrowserRouter>
@@ -118,6 +89,7 @@ function App() {
         <main className='container m-auto mt-4 px-4'>
           <Carousel showArrows autoPlay showThumbs={false}></Carousel>
           <Routes>
+            <Route path='/product/:id' element={<ProductScreen />}></Route>
             <Route path='/' element={<HomeScreen />}></Route>
           </Routes>
         </main>
