@@ -8,6 +8,7 @@ import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
+import SellerScreen from "./screens/SellerScreen";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { Store } from "./Store";
@@ -91,6 +92,7 @@ function App() {
           <Routes>
             <Route path='/product/:id' element={<ProductScreen />}></Route>
             <Route path='/' element={<HomeScreen />}></Route>
+            <Route path='/seller/:id' element={<SellerScreen />}></Route>
           </Routes>
         </main>
       </div>

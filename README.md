@@ -40,3 +40,12 @@
     2. build sellers carousel
 
 11. Build Product Screen
+
+    1. get product from MongoDB
+    2. buid product screen
+
+12. Build Seller Screen
+
+    1. get seller from MongoDB
+    2. get seller products
+    3. build seller screen

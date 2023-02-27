@@ -52,4 +52,23 @@ productRouter.get(
   })
 );
 
+// this code is defining a route for Get request to the "/sellers/:id" endpoint
+productRouter.get(
+  "/sellers/:id",
+  // callback function to handle the request  and send a response.
+  expressAsyncHandler(async ({ params }, res) => {
+    // query the database ( request )
+    const products = await Product.find({
+      seller: params.id,
+    }).populate(
+      "seller",
+      "seller.name seller.logo seller.rating seller.numReviews"
+    );
+
+    // response
+    res.send(products);
+  })
+);
+
 export default productRouter;
+// // {} []

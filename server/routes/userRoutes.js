@@ -19,4 +19,25 @@ userRouter.get(
   })
 );
 
+// this code is definning a route handler for a GET request to the "sellers/:id" endpoint
+userRouter.get(
+  "/sellers/:id",
+  // callback function to handle the request and send a response.
+  expressAsyncHandler(async (req, res) => {
+    // query the database
+    const user = await User.findById(req.params.id);
+    if (user && user.isSeller) {
+      // send a response
+      res.send({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        seller: user.seller,
+      });
+    } else {
+      res.status(404).send({ message: "Seller Not Found" });
+    }
+  })
+);
+
 export default userRouter;

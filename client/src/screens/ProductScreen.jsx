@@ -25,7 +25,7 @@ const ProductScreen = () => {
     console.log("Add to cart");
   };
 
-  // // console.log(product);
+  console.log(product);
 
   return (
     <div>

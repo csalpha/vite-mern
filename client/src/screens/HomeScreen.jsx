@@ -47,7 +47,7 @@ const HomeScreen = () => {
       </div>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4'>
         {products.map((product) => (
-          <div key={product._id} className='mb-3'>
+          <div sm={6} lg={4} key={product._id} className='mb-3'>
             <Product product={product}></Product>
           </div>
         ))}
