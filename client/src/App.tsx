@@ -42,7 +42,18 @@ function App() {
               <li className={`mx-4 cursor-pointer my-2 text-lg`}>About</li>
               <li className={`mx-4 cursor-pointer my-2 text-lg`}>Services</li>
               <li className={`mx-4 cursor-pointer my-2 text-lg`}>Contacts</li>
-              <li className={`mx-4 cursor-pointer my-2 text-lg`}>Cart</li>
+              <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                Cart
+                {cartItems.length > 0 && (
+                  <span className='ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white'>
+                    {
+                      //use reduce function to calculate accumulator (a) and current item (c)
+                      // default value to accumulator is zero
+                      cartItems.reduce((a, c) => a + c.quantity, 0)
+                    }
+                  </span>
+                )}
+              </li>
               <li className='bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]'>
                 Login
               </li>

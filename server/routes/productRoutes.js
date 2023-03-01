@@ -26,9 +26,6 @@ productRouter.get(
   })
 );
 
-//this route handler is used to retrieve a single product from the database using the product's unique slug identifier.
-
-// this code is defining a route handler for a GET request to the "/slug/:slug" endpoint
 productRouter.get(
   "/slug/:slug",
   // callback function to handle the request and send a response.
@@ -52,23 +49,42 @@ productRouter.get(
   })
 );
 
-// this code is defining a route for Get request to the "/sellers/:id" endpoint
+/* Route handler to get full details of all the products 
+   sold by a specific seller */
 productRouter.get(
   "/sellers/:id",
-  // callback function to handle the request  and send a response.
+  // callback function to handle the request and send a response.
   expressAsyncHandler(async ({ params }, res) => {
-    // query the database ( request )
+    // Finding a product associated with a certain seller using the provided id
     const products = await Product.find({
       seller: params.id,
     }).populate(
-      "seller",
+      "seller", // Populating the seller information
       "seller.name seller.logo seller.rating seller.numReviews"
     );
-
-    // response
+    // Sending the found products as the response
     res.send(products);
   })
 );
 
+// Send an HTTP GET request for product with specific ID
+productRouter.get(
+  "/:id",
+  // callback function to handle the request and send a response.
+  expressAsyncHandler(async (req, res) => {
+    // Retrieve product from the database using req parameter
+    const product = await Product.findById(req.params.id).populate(
+      "seller",
+      "seller.name seller.logo seller.rating seller.numReviews"
+    );
+    // If a product is retrieved, send it in response
+    if (product) {
+      res.send(product);
+    } // Otherwise, when product is not found, send 404 error
+    else {
+      res.status(404).send({ message: "Product Not Found" });
+    }
+  })
+);
+
 export default productRouter;
-// // {} []
