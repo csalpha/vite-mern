@@ -51,3 +51,5 @@
     3. build seller screen
 
 13. Add to cart
+
+14. Build Cart Screen

@@ -119,7 +119,7 @@ const ProductScreen = () => {
 
     // Add item to the cart and navigate to the cart page
     ctxDispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-    // // navigate("/cart");
+    navigate("/cart");
   };
 
   console.log(product);

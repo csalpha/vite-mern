@@ -9,6 +9,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import SellerScreen from "./screens/SellerScreen";
+import CartScreen from "./screens/CartScreen";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { Store } from "./Store";
@@ -36,24 +37,49 @@ function App() {
         <header>
           <nav className='gradient-bg-nav flex h-12 items-center px-4 justify-between shadow-md text-white'>
             <div className='md:flex-[0.5] flex-initial justify-center items-center'>
-              <img src={logo} alt='logo' className='w-8 cursor-pointer' />
+              <Link to='/'>
+                {" "}
+                <img
+                  src={logo}
+                  alt='logo'
+                  className='w-8 cursor-pointer'
+                />{" "}
+              </Link>
             </div>
             <ul className='text-white md:flex hidden list-none flex-row justify-between items-center flex-initial'>
-              <li className={`mx-4 cursor-pointer my-2 text-lg`}>About</li>
-              <li className={`mx-4 cursor-pointer my-2 text-lg`}>Services</li>
-              <li className={`mx-4 cursor-pointer my-2 text-lg`}>Contacts</li>
-              <li className={`mx-4 cursor-pointer my-2 text-lg`}>
-                Cart
-                {cartItems.length > 0 && (
-                  <span className='ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white'>
-                    {
-                      //use reduce function to calculate accumulator (a) and current item (c)
-                      // default value to accumulator is zero
-                      cartItems.reduce((a, c) => a + c.quantity, 0)
-                    }
-                  </span>
-                )}
-              </li>
+              <Link to='/'>
+                {" "}
+                <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                  About
+                </li>{" "}
+              </Link>
+              <Link to='/'>
+                {" "}
+                <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                  Services
+                </li>{" "}
+              </Link>
+              <Link to='/'>
+                {" "}
+                <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                  Contacts
+                </li>{" "}
+              </Link>
+              <Link to='/cart'>
+                {" "}
+                <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                  Cart
+                  {cartItems.length > 0 && (
+                    <span className='ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white'>
+                      {
+                        //use reduce function to calculate accumulator (a) and current item (c)
+                        // default value to accumulator is zero
+                        cartItems.reduce((a, c) => a + c.quantity, 0)
+                      }
+                    </span>
+                  )}
+                </li>
+              </Link>
               <li className='bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]'>
                 Login
               </li>
@@ -81,14 +107,36 @@ function App() {
                   <li className='text-xl w-full my-2'>
                     <AiOutlineClose onClick={() => setToggleMenu(false)} />
                   </li>
-                  <li className={`mx-4 cursor-pointer my-2 text-lg`}>About</li>
-                  <li className={`mx-4 cursor-pointer my-2 text-lg`}>
-                    Services
-                  </li>
-                  <li className={`mx-4 cursor-pointer my-2 text-lg`}>
-                    Contacts
-                  </li>
-                  <li className={`mx-4 cursor-pointer my-2 text-lg`}>Cart</li>
+                  <Link to='/'>
+                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                      About
+                    </li>
+                  </Link>
+                  <Link to='/'>
+                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                      Services
+                    </li>
+                  </Link>
+                  <Link to='/'>
+                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                      Contacts
+                    </li>
+                  </Link>
+                  <Link to='/cart'>
+                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                      {" "}
+                      Cart
+                      {cartItems.length > 0 && (
+                        <span className='ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white'>
+                          {
+                            //use reduce function to calculate accumulator (a) and current item (c)
+                            // default value to accumulator is zero
+                            cartItems.reduce((a, c) => a + c.quantity, 0)
+                          }
+                        </span>
+                      )}
+                    </li>
+                  </Link>
 
                   <li className='bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]'>
                     Login
@@ -104,6 +152,7 @@ function App() {
             <Route path='/product/:id' element={<ProductScreen />}></Route>
             <Route path='/' element={<HomeScreen />}></Route>
             <Route path='/seller/:id' element={<SellerScreen />}></Route>
+            <Route path='/cart' element={<CartScreen />}></Route>
           </Routes>
         </main>
       </div>

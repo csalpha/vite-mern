@@ -105,7 +105,7 @@ const HomeScreen = () => {
       ) : (
         <>
           <div className='py-2'>
-            <h2 className=''>Top Sellers</h2>
+            <h1 className='mb-4 text-xl'>Top Sellers</h1>
           </div>
           <div className=''>
             <Carousel showArrows autoPlay showThumbs={false}>
@@ -120,7 +120,7 @@ const HomeScreen = () => {
             </Carousel>
           </div>
           <div className='py-2'>
-            <h2 className=''>Top Products</h2>
+            <h1 className='mb-4 text-xl'>Top Products</h1>
           </div>
           <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4'>
             {products.map((product) => (
