@@ -10,6 +10,7 @@ import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import SellerScreen from "./screens/SellerScreen";
 import CartScreen from "./screens/CartScreen";
+import SigninScreen from "./screens/SigninScreen";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { Store } from "./Store";
@@ -27,6 +28,31 @@ function App() {
   const { cart, userInfo } = state;
 
   const { cartItems } = cart;
+
+  // defines a function named signoutHandler which clears user information and redirects to the signin page.
+  const signoutHandler = () => {
+    // dispatch action to sign out the user by changing the state of global context
+    ctxDispatch({
+      type: "USER_SIGNOUT", // the type of action is USER_SIGNOUT
+    });
+
+    // remove user information, cart items, shipping address and payment method from localStorage
+    localStorage.removeItem(
+      "userInfo" // pass parameter: 'userInfo'
+    );
+    localStorage.removeItem(
+      "cartItems" // pass parameter: 'cartItems'
+    );
+    localStorage.removeItem(
+      "shippingAddress" // pass parameter: 'shippingAddress'
+    );
+    localStorage.removeItem(
+      "paymentMethod" // pass parameter: 'paymentMethod'
+    );
+
+    // redirect the user to the signin page by changing window location
+    window.location.href = "/signin";
+  };
 
   return (
     <BrowserRouter>
@@ -80,9 +106,26 @@ function App() {
                   )}
                 </li>
               </Link>
-              <li className='bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]'>
-                Login
-              </li>
+              {userInfo ? (
+                <>
+                  <Link to=''>
+                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                      {"Hello, " + userInfo.name}
+                    </li>
+                  </Link>
+                  <Link className='' to='' onClick={signoutHandler}>
+                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                      Sign Out
+                    </li>
+                  </Link>
+                </>
+              ) : (
+                <Link to='/signin'>
+                  <li className='bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]'>
+                    Login
+                  </li>
+                </Link>
+              )}
             </ul>
             <div className='flex relative'>
               {!toggleMenu && (
@@ -138,9 +181,26 @@ function App() {
                     </li>
                   </Link>
 
-                  <li className='bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]'>
-                    Login
-                  </li>
+                  {userInfo ? (
+                    <>
+                      <Link to=''>
+                        <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                          {"Hello, " + userInfo.name}
+                        </li>
+                      </Link>
+                      <Link className='' to='' onClick={signoutHandler}>
+                        <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                          Sign Out
+                        </li>
+                      </Link>
+                    </>
+                  ) : (
+                    <Link to='/signin'>
+                      <li className='bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]'>
+                        Sign In
+                      </li>
+                    </Link>
+                  )}
                 </ul>
               )}
             </div>
@@ -153,6 +213,7 @@ function App() {
             <Route path='/' element={<HomeScreen />}></Route>
             <Route path='/seller/:id' element={<SellerScreen />}></Route>
             <Route path='/cart' element={<CartScreen />}></Route>
+            <Route path='/signin' element={<SigninScreen />}></Route>
           </Routes>
         </main>
       </div>
