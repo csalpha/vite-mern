@@ -58,3 +58,8 @@
 
     1. build signin api
     2. build signin screen
+
+16. Build Sign Up Screen
+
+    1. build signup api
+    2. build signup screen

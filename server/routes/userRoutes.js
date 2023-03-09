@@ -70,4 +70,33 @@ userRouter.post(
   })
 );
 
+// this code is definning a route handler for a POST request to the "/signup" endpoint
+userRouter.post(
+  "/signup",
+  // callback function to handle the request and send a response.
+  expressAsyncHandler(async (req, res) => {
+    // creates a new user object using the User model provided.
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      // hashes a user's password before saving.
+      password: bcrypt.hashSync(req.body.password, 8),
+    });
+
+    /*  saves the user object to the database and returns a promise
+     that resolves once the operation is complete. */
+    const createdUser = await user.save();
+
+    // sends a JSON response back to the client with user details and an authentication token.
+    res.send({
+      _id: createdUser._id,
+      name: createdUser.name,
+      email: createdUser.email,
+      isAdmin: createdUser.isAdmin,
+      isSeller: user.isSeller,
+      token: generateToken(createdUser),
+    });
+  })
+);
+
 export default userRouter;

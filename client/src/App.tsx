@@ -11,6 +11,7 @@ import ProductScreen from "./screens/ProductScreen";
 import SellerScreen from "./screens/SellerScreen";
 import CartScreen from "./screens/CartScreen";
 import SigninScreen from "./screens/SigninScreen";
+import SignupScreen from "./screens/SignupScreen";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { Store } from "./Store";
@@ -214,6 +215,7 @@ function App() {
             <Route path='/seller/:id' element={<SellerScreen />}></Route>
             <Route path='/cart' element={<CartScreen />}></Route>
             <Route path='/signin' element={<SigninScreen />}></Route>
+            <Route path='/signup' element={<SignupScreen />}></Route>
           </Routes>
         </main>
       </div>
