@@ -122,6 +122,8 @@ const ProductScreen = () => {
     navigate("/cart");
   };
 
+  const submitHandler = async () => {};
+
   console.log(product);
 
   return loading ? (
@@ -238,9 +240,9 @@ const ProductScreen = () => {
               </div>
 
               <div className='mb-3'>
-                <Button disabled={loadingCreateReview} type='submit'>
+                <button disabled={loadingCreateReview} type='submit'>
                   Submit
-                </Button>
+                </button>
 
                 {loadingCreateReview && <LoadingBox></LoadingBox>}
               </div>

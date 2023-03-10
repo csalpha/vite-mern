@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { Store } from "../Store";
 import MessageBox from "../components/MessageBox";
 import { useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { XCircleIcon } from "@heroicons/react/outline";
 import Axios from "axios";
 import { toast } from "react-toastify";
 // {  }
 
 const CartScreen = () => {
+  const navigate = useNavigate();
   /* using destructuring to extract state and dispatch properties from the context object 
   and renaming dispatch to ctxDispatch for convenience. */
   const {
@@ -55,6 +56,12 @@ const CartScreen = () => {
       type: "CART_REMOVE_ITEM",
       payload: item,
     });
+  };
+
+  const checkoutHandler = () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    navigate("/signin?redirect=/shipping");
   };
 
   console.log(cartItems);
@@ -135,7 +142,7 @@ const CartScreen = () => {
                 if user  logged in -> redirect user to the shipping screen 
                 if it's not logged in, keep it in loggin screen */}
                 <button
-                  onClick={() => router.push("login?redirect=/shipping")}
+                  onClick={checkoutHandler}
                   className='primary-button w-full'
                 >
                   Check Out

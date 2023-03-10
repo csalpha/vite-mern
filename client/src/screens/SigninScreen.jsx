@@ -78,13 +78,16 @@ const SigninScreen = () => {
         <Helmet>
           <title>Sign In</title>
         </Helmet>
-        <h1 className='mb-4 text-xl'>Login</h1>
+
         <form className='mx-auto max-w-screen-md' onSubmit={submitHandler}>
+          <h1 className='mb-4 text-xl'>Login</h1>
           <div className='mb-4'>
             <label htmlFor='email'>Email</label>
             <input
+              className='w-full'
               type='email'
               onChange={(e) => setEmail(e.target.value)}
+              autoFocus
               required
             />
           </div>
@@ -92,6 +95,7 @@ const SigninScreen = () => {
             <label htmlFor='password'>Password</label>
 
             <input
+              className='w-full'
               type={passwordShown ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
               required

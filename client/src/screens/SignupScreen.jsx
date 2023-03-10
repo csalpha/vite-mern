@@ -92,19 +92,23 @@ const SignupScreen = () => {
         <Helmet>
           <title>Sign Up</title>
         </Helmet>
-        <h1 className='mb-4 text-xl'>Sign Up</h1>
+
         <form className='mx-auto max-w-screen-md' onSubmit={submitHandler}>
+          <h1 className='mb-4 text-xl'>Sign Up</h1>
           <div className='mb-4'>
             <label htmlFor='email'>Name</label>
             <input
+              className='w-full'
               type='name'
               onChange={(e) => setName(e.target.value)}
               required
+              autoFocus
             />
           </div>
           <div className='mb-4'>
             <label htmlFor='email'>Email</label>
             <input
+              className='w-full'
               type='email'
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -114,6 +118,7 @@ const SignupScreen = () => {
             <label htmlFor='password'>Password</label>
 
             <input
+              className='w-full'
               type={passwordShown ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -126,6 +131,7 @@ const SignupScreen = () => {
             <label htmlFor='password'>Confirm Password</label>
 
             <input
+              className='w-full'
               type={passwordShown ? "text" : "password"}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
