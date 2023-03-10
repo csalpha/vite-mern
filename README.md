@@ -67,3 +67,7 @@
 17. Build Shipping Address Screen
 
     1. build shipping address screen
+
+18. Build Payment Method Screen
+
+    1. build payment method screen
