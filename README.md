@@ -71,3 +71,9 @@
 18. Build Payment Method Screen
 
     1. build payment method screen
+
+19. Build Place Order Screen
+
+    1. build order model
+    2. build order routes
+    3. build place order screen
