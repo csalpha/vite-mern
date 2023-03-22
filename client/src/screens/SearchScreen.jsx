@@ -127,10 +127,14 @@ const SearchScreen = () => {
       <Helmet>
         <title>Search Products</title>
       </Helmet>
-      <div>
-        <div md={3}>
+
+      <div className='container m-auto mt-4 px-4'>
+        <div className='py-2'>
+          <Link to='/'>back to products</Link>
+        </div>
+        <div className='grid md:grid-cols-4 md:gap-3'>
           <h3>Department</h3>
-          <div>
+          <div className=''>
             <ul>
               <li>
                 <Link
@@ -152,7 +156,7 @@ const SearchScreen = () => {
               ))}
             </ul>
           </div>
-          <div>
+          <div className=''>
             <h3>Price</h3>
             <ul>
               <li>
@@ -176,7 +180,7 @@ const SearchScreen = () => {
               ))}
             </ul>
           </div>
-          <div>
+          <div className=''>
             <h3>Avg. Customer Review</h3>
             <ul>
               {ratings.map((r) => (
@@ -207,14 +211,14 @@ const SearchScreen = () => {
             <MessageBox variant='danger'>{error}</MessageBox>
           ) : (
             <>
-              <div className='justify-content-between mb-3'>
-                <div md={6}>
+              <div className='grid md:grid-cols-4 md:gap-3'>
+                <div>
                   {loading ? (
                     <LoadingBox></LoadingBox>
                   ) : error ? (
                     <MessageBox variant='danger'>{error}</MessageBox>
                   ) : (
-                    <div>
+                    <div className='container m-auto mt-4 px-4'>
                       {countProducts === 0 ? "No" : countProducts} Results
                       {query !== "all" && " : " + query}
                       {category !== "all" && " : " + category}
@@ -254,15 +258,18 @@ const SearchScreen = () => {
                 <MessageBox>No Product Found</MessageBox>
               )}
 
-              <div>
+              <div className='container m-auto mt-4 px-4'>
                 {products.map((product) => (
-                  <div sm={6} lg={4} className='mb-3' key={product._id}>
+                  <div
+                    className='grid md:grid-cols-4 md:gap-3'
+                    key={product._id}
+                  >
                     <Product product={product}></Product>
                   </div>
                 ))}
               </div>
 
-              <div>
+              <div className='container m-auto mt-4 px-4'>
                 {[...Array(pages).keys()].map((x) => (
                   <Link
                     key={x + 1}

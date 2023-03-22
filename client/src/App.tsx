@@ -117,9 +117,14 @@ function App() {
               </Link>
               {userInfo ? (
                 <>
-                  <Link to=''>
+                  <Link to='/profile'>
                     <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                       {"Hello, " + userInfo.name}
+                    </li>
+                  </Link>
+                  <Link to='/profile'>
+                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                      Profile
                     </li>
                   </Link>
                   <Link className='' to='' onClick={signoutHandler}>
@@ -194,9 +199,14 @@ function App() {
                   </Link>
                   {userInfo ? (
                     <>
-                      <Link to=''>
+                      <Link to='/profile'>
                         <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                           {"Hello, " + userInfo.name}
+                        </li>
+                      </Link>
+                      <Link to='/profile'>
+                        <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                          Profile
                         </li>
                       </Link>
                       <Link className='' to='' onClick={signoutHandler}>

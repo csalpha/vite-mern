@@ -81,3 +81,5 @@
 20. Build Order Screen
 
 21. Build Search Screen
+
+22. Build Private Route
