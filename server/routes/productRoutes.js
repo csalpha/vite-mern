@@ -26,6 +26,7 @@ productRouter.get(
   })
 );
 
+// this code is defining a route handler for a GET request to the "/slug/:slug" endpoint
 productRouter.get(
   "/slug/:slug",
   // callback function to handle the request and send a response.
@@ -49,8 +50,8 @@ productRouter.get(
   })
 );
 
-/* Route handler to get full details of all the products 
-   sold by a specific seller */
+// this code is defining a route handler for a GET request to the "/sellers/:id" endpoint
+// get full details of all the products sold by a specific seller
 productRouter.get(
   "/sellers/:id",
   // callback function to handle the request and send a response.
@@ -67,6 +68,7 @@ productRouter.get(
   })
 );
 
+// this code is defining a route handler for a GET request to the "/:id" endpoint
 // Send an HTTP GET request for product with specific ID
 productRouter.get(
   "/:id",
@@ -87,128 +89,146 @@ productRouter.get(
   })
 );
 
-// get categories
+// this code is defining a route handler for a GET request to the "/categories" endpoint
+// Get all categories of products
 productRouter.get(
-  "/categories", // 1st parameter - api address
-  expressAsyncHandler(
-    async (
-      req, // 1st param - request
-      res // 2nd param - response
-    ) => {
-      // get categories using Product.find
-      const categories = await Product.find().distinct("category");
-
-      // response | send | categories
-      res.send(
-        categories // pass parameter
-      );
-    }
-  ) // 2nd parameter - expressAsyncHandler
+  "/categories",
+  // callback function to handle the request and send a response.
+  expressAsyncHandler(async (req, res) => {
+    // Find distinct categories from Product collection
+    const categories = await Product.find().distinct("category");
+    // Send the categories back to the client
+    res.send(categories);
+  })
 );
 
+// this code is defining a route handler for a GET request to the "/" endpoint
 const PAGE_SIZE = 3;
 productRouter.get(
-  "/", // 1st parameter - api address
-  expressAsyncHandler(
-    async (
-      { query }, // 1st param - query
-      res // 2nd param - response
-    ) => {
-      // define pageSize
-      const pageSize = query.pageSize || PAGE_SIZE;
-      // define page
-      const page = query.page || 1;
-      // define category
-      const category = query.category || "";
-      // define brand
-      const brand = query.brand || "";
-      // define price
-      const price = query.price || "";
-      // define rating
-      const rating = query.rating || "";
-      // define order
-      const order = query.order || "";
-      // define searchQuery
-      const searchQuery = query.query || "";
-      // define queryFilter
-      const queryFilter =
-        searchQuery && searchQuery !== "all"
-          ? {
-              name: {
-                $regex: searchQuery,
-                $options: "i",
-              },
-            }
-          : {};
-      // define categoryFilter
-      const categoryFilter = category && category !== "all" ? { category } : {};
-      // define brandFilter
-      const brandFilter = brand && brand !== "all" ? { brand } : {};
-      // define ratingFilter
-      const ratingFilter =
-        rating && rating !== "all"
-          ? {
-              rating: {
-                $gte: Number(rating),
-              },
-            }
-          : {};
-      // define priceFilter
-      const priceFilter =
-        price && price !== "all"
-          ? {
-              price: {
-                $gte: Number(price.split("-")[0]),
-                $lte: Number(price.split("-")[1]),
-              },
-            }
-          : {};
+  "/", // API endpoint
+  // callback function to handle the request and send a response.
+  expressAsyncHandler(async ({ query }, res) => {
+    // set page size to query page size or default page size
+    const pageSize = query.pageSize || PAGE_SIZE;
+    // set page to query page or default page
+    const page = query.page || 1;
+    // set category to query category or empty string
+    const category = query.category || "";
+    // set brand to query brand or empty string
+    const brand = query.brand || "";
+    // set price to query price or empty string
+    const price = query.price || "";
+    // set rating to query rating or empty string
+    const rating = query.rating || "";
+    // set order to query order or empty string
+    const order = query.order || "";
+    // set searchQuery to query query or empty string
+    const searchQuery = query.query || "";
 
-      // define sortOrder
-      const sortOrder =
-        order === "featured"
-          ? { featured: -1 }
-          : order === "lowest"
-          ? { price: 1 }
-          : order === "highest"
-          ? { price: -1 }
-          : order === "toprated"
-          ? { rating: -1 }
-          : order === "newest"
-          ? { createdAt: -1 }
-          : { _id: -1 };
+    /* if searchQuery is not empty and not equal to all
+       set queryFilter to regex of searchQuery */
+    const queryFilter =
+      searchQuery && searchQuery !== "all"
+        ? {
+            name: {
+              $regex: searchQuery,
+              $options: "i",
+            },
+          }
+        : // else set to empty object
+          {};
+    /* if category is not empty and not equal to all 
+       set categoryFilter to category */
+    const categoryFilter =
+      category && category !== "all"
+        ? { category }
+        : // else set to empty object
+          {};
+    /*  if brand is not empty and not equal to all
+    // set brandFilter to brand */
+    const brandFilter =
+      brand && brand !== "all"
+        ? { brand }
+        : // else set to empty object
+          {};
+    /* if rating is not empty and not equal to all
+       set ratingFilter to rating */
+    const ratingFilter =
+      rating && rating !== "all"
+        ? {
+            rating: {
+              $gte: Number(rating),
+            },
+          }
+        : // else set to empty object
+          {};
 
-      // define products
-      const products = await Product.find({
-        ...queryFilter,
-        ...categoryFilter,
-        ...priceFilter,
-        ...brandFilter,
-        ...ratingFilter,
-      })
-        .populate("seller", "seller.name seller.logo")
-        .sort(sortOrder)
-        .skip(pageSize * (page - 1))
-        .limit(pageSize);
+    /* if price is not empty and not equal to all
+       set priceFilter to price  */
+    const priceFilter =
+      price && price !== "all"
+        ? {
+            price: {
+              $gte: Number(price.split("-")[0]),
+              $lte: Number(price.split("-")[1]),
+            },
+          }
+        : // else set to empty object
+          {};
 
-      // define countProducts
-      const countProducts = await Product.countDocuments({
-        ...queryFilter,
-        ...categoryFilter,
-        ...priceFilter,
-        ...brandFilter,
-        ...ratingFilter,
-      });
+    /* set sortOrder to featured, lowest, highest,
+     toprated, newest, or _id based on query order */
+    const sortOrder =
+      order === "featured"
+        ? { featured: -1 }
+        : order === "lowest"
+        ? { price: 1 }
+        : order === "highest"
+        ? { price: -1 }
+        : order === "toprated"
+        ? { rating: -1 }
+        : order === "newest"
+        ? { createdAt: -1 }
+        : { _id: -1 };
 
-      // response | send
-      res.send({
-        products,
-        countProducts,
-        page,
-        pages: Math.ceil(countProducts / pageSize),
-      });
-    }
-  )
+    // Find products from Product collection
+    /* filter products by   queryFilter, categoryFilter, 
+       priceFilter, brandFilter, and ratingFilter        */
+    const products = await Product.find({
+      ...queryFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...brandFilter,
+      ...ratingFilter,
+    })
+      // populate seller with name and logo
+      .populate("seller", "seller.name seller.logo")
+      // sort the results according to sortOrder
+      .sort(sortOrder)
+      // skip pageSize * (page - 1) results
+      .skip(pageSize * (page - 1))
+      // limit the results to pageSize
+      .limit(pageSize);
+
+    /* Count the number of documents in the Product collection that match the given 
+       queryFilter, categoryFilter, priceFilter, brandFilter and ratingFilter  */
+    const countProducts = await Product.countDocuments({
+      ...queryFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...brandFilter,
+      ...ratingFilter,
+    });
+
+    /* Send a response object containing 
+    the products, countProducts, page and pages */
+    res.send({
+      products, // Array of products
+      countProducts, // Total number of products
+      page, // Current page number
+      pages: Math.ceil(countProducts / pageSize), // Total number of pages
+    });
+  })
 );
 
 export default productRouter;

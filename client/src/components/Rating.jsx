@@ -20,14 +20,14 @@ export default function Rating(
           className={
             rating >= 1 /* true condiction */
               ? // set className text
-                "fas fa-star"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
               rating >= 0.5 /* true condiction */
               ? // set className text
-                "fas fa-star-half-alt"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
                 // set className text
-                "far fa-star"
+                "w-5 h-5 text-yellow-400"
           }
         ></i>
       </span>
@@ -38,14 +38,14 @@ export default function Rating(
           className={
             rating >= 2 /* true condiction */
               ? // set className text
-                "fas fa-star"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
               rating >= 1.5 /* true condiction */
               ? // set className text
-                "fas fa-star-half-alt"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
                 // set className text
-                "far fa-star"
+                "w-5 h-5 text-yellow-400"
           }
         ></i>
       </span>
@@ -55,14 +55,14 @@ export default function Rating(
         <i
           className={
             rating >= 3 /* true condiction */
-              ? "fas fa-star"
+              ? "w-5 h-5 text-yellow-400"
               : // otherwise
               rating >= 2.5 /* true condiction */
               ? // set className text
-                "fas fa-star-half-alt"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
                 // set className text
-                "far fa-star"
+                "w-5 h-5 text-yellow-400"
           }
         ></i>
       </span>
@@ -73,14 +73,14 @@ export default function Rating(
           className={
             rating >= 4 /* true condiction */
               ? // set className text
-                "fas fa-star"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
               rating >= 3.5 /* true condiction */
               ? // set className text
-                "fas fa-star-half-alt"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
                 // set className text
-                "far fa-star"
+                "w-5 h-5 text-yellow-400"
           }
         ></i>
       </span>
@@ -91,14 +91,14 @@ export default function Rating(
           className={
             rating >= 5 /* true condiction */
               ? // set className text
-                "fas fa-star"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
               rating >= 4.5 /* true condiction */
               ? // set className text
-                "fas fa-star-half-alt"
+                "w-5 h-5 text-yellow-400"
               : // otherwise
                 // set className text
-                "far fa-star"
+                "w-5 h-5 text-yellow-400"
           }
         ></i>
       </span>
