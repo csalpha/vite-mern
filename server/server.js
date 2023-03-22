@@ -41,6 +41,16 @@ app.use("/api/users", userRouter);
 // Registers the orderRouter under "/api/orders".
 app.use("/api/orders", orderRouter);
 
+app.get(
+  "/api/keys/paypal", // route
+  (req, res) => {
+    res.send(
+      process.env.PAYPAL_CLIENT_ID || // sends back the PayPal client ID  OR
+        "sb" // a default string
+    );
+  }
+);
+
 /* Starts the server listening on the specified port 
 and logs a message indicating the server is running. */
 app.listen(port, () => {

@@ -87,4 +87,128 @@ productRouter.get(
   })
 );
 
+// get categories
+productRouter.get(
+  "/categories", // 1st parameter - api address
+  expressAsyncHandler(
+    async (
+      req, // 1st param - request
+      res // 2nd param - response
+    ) => {
+      // get categories using Product.find
+      const categories = await Product.find().distinct("category");
+
+      // response | send | categories
+      res.send(
+        categories // pass parameter
+      );
+    }
+  ) // 2nd parameter - expressAsyncHandler
+);
+
+const PAGE_SIZE = 3;
+productRouter.get(
+  "/", // 1st parameter - api address
+  expressAsyncHandler(
+    async (
+      { query }, // 1st param - query
+      res // 2nd param - response
+    ) => {
+      // define pageSize
+      const pageSize = query.pageSize || PAGE_SIZE;
+      // define page
+      const page = query.page || 1;
+      // define category
+      const category = query.category || "";
+      // define brand
+      const brand = query.brand || "";
+      // define price
+      const price = query.price || "";
+      // define rating
+      const rating = query.rating || "";
+      // define order
+      const order = query.order || "";
+      // define searchQuery
+      const searchQuery = query.query || "";
+      // define queryFilter
+      const queryFilter =
+        searchQuery && searchQuery !== "all"
+          ? {
+              name: {
+                $regex: searchQuery,
+                $options: "i",
+              },
+            }
+          : {};
+      // define categoryFilter
+      const categoryFilter = category && category !== "all" ? { category } : {};
+      // define brandFilter
+      const brandFilter = brand && brand !== "all" ? { brand } : {};
+      // define ratingFilter
+      const ratingFilter =
+        rating && rating !== "all"
+          ? {
+              rating: {
+                $gte: Number(rating),
+              },
+            }
+          : {};
+      // define priceFilter
+      const priceFilter =
+        price && price !== "all"
+          ? {
+              price: {
+                $gte: Number(price.split("-")[0]),
+                $lte: Number(price.split("-")[1]),
+              },
+            }
+          : {};
+
+      // define sortOrder
+      const sortOrder =
+        order === "featured"
+          ? { featured: -1 }
+          : order === "lowest"
+          ? { price: 1 }
+          : order === "highest"
+          ? { price: -1 }
+          : order === "toprated"
+          ? { rating: -1 }
+          : order === "newest"
+          ? { createdAt: -1 }
+          : { _id: -1 };
+
+      // define products
+      const products = await Product.find({
+        ...queryFilter,
+        ...categoryFilter,
+        ...priceFilter,
+        ...brandFilter,
+        ...ratingFilter,
+      })
+        .populate("seller", "seller.name seller.logo")
+        .sort(sortOrder)
+        .skip(pageSize * (page - 1))
+        .limit(pageSize);
+
+      // define countProducts
+      const countProducts = await Product.countDocuments({
+        ...queryFilter,
+        ...categoryFilter,
+        ...priceFilter,
+        ...brandFilter,
+        ...ratingFilter,
+      });
+
+      // response | send
+      res.send({
+        products,
+        countProducts,
+        page,
+        pages: Math.ceil(countProducts / pageSize),
+      });
+    }
+  )
+);
+
 export default productRouter;

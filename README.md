@@ -77,3 +77,5 @@
     1. build order model
     2. build order routes
     3. build place order screen
+
+20. Build Order Screen

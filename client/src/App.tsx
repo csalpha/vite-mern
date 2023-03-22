@@ -19,7 +19,8 @@ import OrderScreen from "./screens/OrderScreen";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { Store } from "./Store";
-
+import SearchBox from "./components/SearchBox";
+import SearchScreen from "./screens/SearchScreen";
 // [] {}
 
 function App() {
@@ -78,6 +79,9 @@ function App() {
               </Link>
             </div>
             <ul className='text-white md:flex hidden list-none flex-row justify-between items-center flex-initial'>
+              <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                <SearchBox />
+              </li>{" "}
               <Link to='/'>
                 {" "}
                 <li className={`mx-4 cursor-pointer my-2 text-lg`}>
@@ -155,6 +159,9 @@ function App() {
                   <li className='text-xl w-full my-2'>
                     <AiOutlineClose onClick={() => setToggleMenu(false)} />
                   </li>
+                  <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                    <SearchBox />
+                  </li>{" "}
                   <Link to='/'>
                     <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                       About
@@ -185,7 +192,6 @@ function App() {
                       )}
                     </li>
                   </Link>
-
                   {userInfo ? (
                     <>
                       <Link to=''>
@@ -224,6 +230,7 @@ function App() {
             <Route path='payment' element={<PaymentMethodScreen />}></Route>
             <Route path='placeorder' element={<PlaceOrderScreen />}></Route>
             <Route path='/order/:id' element={<OrderScreen />}></Route>
+            <Route path='/search' element={<SearchScreen />}></Route>
           </Routes>
         </main>
       </div>
