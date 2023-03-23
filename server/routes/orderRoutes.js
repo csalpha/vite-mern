@@ -150,5 +150,20 @@ orderRouter.put(
   })
 );
 
+// Route to get all orders for the logged in user
+orderRouter.get(
+  "/mine", // route path
+  isAuth, // authentication middleware
+  // Async handler function that processes the request and sends the response
+  expressAsyncHandler(async (req, res) => {
+    // find orders for the logged in user
+    const orders = await Order.find({
+      user: req.user._id,
+    });
+    // send the orders back to the client
+    res.send(orders);
+  })
+);
+
 // export
 export default orderRouter;

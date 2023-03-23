@@ -108,7 +108,7 @@ const OrderScreen = () => {
   // extract parameters from the URL
   const params = useParams();
 
-  // // navigate between pages
+  // navigate between pages
   const navigate = useNavigate();
 
   // Destructuring orderId from the params object

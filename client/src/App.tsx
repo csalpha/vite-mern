@@ -23,6 +23,7 @@ import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import PrivateRoute from "./components/PrivateRoute";
+import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 // [] {}
 
 function App() {
@@ -129,6 +130,11 @@ function App() {
                       Profile
                     </li>
                   </Link>
+                  <Link to='/orderhistory'>
+                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                      Order History
+                    </li>
+                  </Link>
                   <Link className='' to='' onClick={signoutHandler}>
                     <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                       Sign Out
@@ -211,6 +217,11 @@ function App() {
                           Profile
                         </li>
                       </Link>
+                      <Link to='/orderhistory'>
+                        <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                          Order History
+                        </li>
+                      </Link>
                       <Link className='' to='' onClick={signoutHandler}>
                         <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                           Sign Out
@@ -250,6 +261,10 @@ function App() {
                   <ProfileScreen />
                 </PrivateRoute>
               }
+            ></Route>
+            <Route
+              path='/orderhistory'
+              element={<OrderHistoryScreen />}
             ></Route>
           </Routes>
         </main>
