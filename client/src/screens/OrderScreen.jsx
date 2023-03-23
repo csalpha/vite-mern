@@ -92,8 +92,9 @@ function reducer(state, action) {
         successDeliver: false, // sets the successDeliver flag to false
         errorDeliver: "", // empty string
       };
-    // The default statement returns the current state.
+    // The default statement
     default:
+      // returns the current state
       return state;
   }
 }

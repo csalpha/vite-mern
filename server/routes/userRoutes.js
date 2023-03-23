@@ -99,4 +99,67 @@ userRouter.post(
   })
 );
 
+// This code defines a GET request route for retrieving user details by ID
+userRouter.get(
+  "/:id", // The endpoint is set as "/:id" which captures the user id from the url
+  isAuth, // Middleware function to ensure the user is authenticated
+  isAdmin, // Middleware function to ensure the user has admin privileges
+  // Async handler function that processes the request and sends the response
+  expressAsyncHandler(async (req, res) => {
+    //Retrieve the user details by ID from the database
+    const user = await User.findById(req.params.id);
+    // if the user with the specified ID is found
+    if (user) {
+      // Returns a successful response with the user details
+      res.send(user);
+    }
+    // if the user with the specified ID is not found
+    else {
+      // Returns an error message
+      res.status(404).send({ message: "User Not Found" });
+    }
+  })
+);
+
+// update the user profile
+userRouter.put(
+  "/profile",
+  isAuth, // Middleware function to ensure the user is authenticated
+  // Async handler function that processes the request and sends the response
+  expressAsyncHandler(async (req, res) => {
+    // Find the user by their id
+    const user = await User.findById(req.user._id);
+    if (user) {
+      // Update the user's name and email
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+
+      // If the user is a seller
+      if (user.isSeller) {
+        //update seller information
+        user.seller.name = req.body.sellerName || user.seller.name;
+        user.seller.logo = req.body.sellerLogo || user.seller.logo;
+        user.seller.description =
+          req.body.sellerDescription || user.seller.description;
+      }
+      // If the user has provided a new password, hash it
+      if (req.body.password) {
+        user.password = bcrypt.hashSync(req.body.password, 8);
+      }
+
+      // Save the updated user
+      const updatedUser = await user.save();
+      // Send the updated user information back to the client
+      res.send({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        isSeller: user.isSeller,
+        token: generateToken(updatedUser),
+      });
+    }
+  })
+);
+
 export default userRouter;

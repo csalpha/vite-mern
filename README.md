@@ -83,3 +83,5 @@
 21. Build Search Screen
 
 22. Build Private Route
+
+23. Build Profile Screen

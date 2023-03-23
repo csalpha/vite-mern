@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { Store } from "../Store";
 
 // Create a PrivateRoute component that takes in children as props
-export const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children }) => {
   // Get the state from the Store context
   const { state } = useContext(Store);
   // Get the userInfo from the state
@@ -18,3 +18,5 @@ export const PrivateRoute = ({ children }) => {
     <Navigate to='/signin' />
   );
 };
+
+export default PrivateRoute;

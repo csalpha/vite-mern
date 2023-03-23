@@ -21,6 +21,8 @@ import { Carousel } from "react-responsive-carousel";
 import { Store } from "./Store";
 import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import PrivateRoute from "./components/PrivateRoute";
 // [] {}
 
 function App() {
@@ -241,6 +243,14 @@ function App() {
             <Route path='placeorder' element={<PlaceOrderScreen />}></Route>
             <Route path='/order/:id' element={<OrderScreen />}></Route>
             <Route path='/search' element={<SearchScreen />}></Route>
+            <Route
+              path='/profile'
+              element={
+                <PrivateRoute>
+                  <ProfileScreen />
+                </PrivateRoute>
+              }
+            ></Route>
           </Routes>
         </main>
       </div>
