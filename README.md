@@ -80,8 +80,24 @@
 
 20. Build Order Screen
 
+    1. Create a functional component called OrderScreen
+
 21. Build Search Screen
+
+    1. Create a functional component called SearchScreen
 
 22. Build Private Route
 
+    1. Create a functional component called PrivateRoute
+
 23. Build Profile Screen
+
+    1. Create a functional component called ProfileScreen
+
+24. Build Order History Screen
+
+    1. Create a functional component called HistoryScreen
+
+25. Build Admin Route
+
+    1. Create a functional component called AdminRoute
