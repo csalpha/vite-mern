@@ -101,3 +101,5 @@
 25. Build Admin Route
 
     1. Create a functional component called AdminRoute
+
+26. Build Admin Dashboard

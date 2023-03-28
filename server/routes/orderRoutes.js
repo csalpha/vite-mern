@@ -10,60 +10,8 @@ const orderRouter = express.Router();
 /* this code processes an HTTP POST request for creating a new order, 
 making sure all required fields are given, and saving it on the database. */
 
-// creates an HTTP POST request handler for the "/" endpoint.
-orderRouter.post(
-  "/",
-  //  middleware function that checks if user has valid authentication credentials.
-  isAuth,
-  //wrapper function to handle any errors that might occur during the execution of the main function.
-  expressAsyncHandler(async (req, res) => {
-    // checks if there are any items in the cart
-    if (req.body.orderItems.length === 0) {
-      res.status(400).send({ message: "Cart is empty" });
-    } else {
-      // create a new order using the Order model
-      const order = new Order({
-        seller: req.body.orderItems[0].seller,
-        orderItems: req.body.orderItems.map((x) => ({ ...x, product: x._id })),
-        shippingAddress: req.body.shippingAddress,
-        paymentMethod: req.body.paymentMethod,
-        itemsPrice: req.body.itemsPrice,
-        shippingPrice: req.body.shippingPrice,
-        taxPrice: req.body.taxPrice,
-        totalPrice: req.body.totalPrice,
-        user: req.user._id,
-      });
-
-      // saves the order instance to the database
-      const createdOrder = await order.save();
-
-      res
-        .status(201)
-        .send({ message: "New Order Created", order: createdOrder });
-    }
-  })
-);
-
 /* This code defines a GET request route for fetching the details 
    of a specific order, identified by its id parameter in the URL.  */
-
-// creates an HTTP GET request handler for the "/id" endpoint.
-orderRouter.get(
-  "/:id", // route parameter represents the id of the order to be fetched
-  isAuth, // middleware function that checks if the user trying to access the route is authenticated
-  // route handler function that fetches the order details and sends it back in the response
-  // route handler function that updates the payment details of an order and sends an email to the user
-  expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id); // finds the order by its id
-    if (order) {
-      // send order
-      res.send(order);
-    } else {
-      // send error message
-      res.status(404).send({ message: "Order Not Found" });
-    }
-  })
-);
 
 /* This code defines a route handler function for updating 
    the payment details of an order with the given id.      */
@@ -150,18 +98,116 @@ orderRouter.put(
   })
 );
 
+orderRouter.get(
+  "/summary",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          numOrders: { $sum: 1 },
+          totalSales: { $sum: "$totalPrice" },
+        },
+      },
+    ]);
+    const users = await User.aggregate([
+      {
+        $group: {
+          _id: null,
+          numUsers: { $sum: 1 },
+        },
+      },
+    ]);
+    const dailyOrders = await Order.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          orders: { $sum: 1 },
+          sales: { $sum: "$totalPrice" },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    const productCategories = await Product.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    res.send({ users, orders, dailyOrders, productCategories });
+  })
+);
+
 // Route to get all orders for the logged in user
 orderRouter.get(
   "/mine", // route path
   isAuth, // authentication middleware
-  // Async handler function that processes the request and sends the response
   expressAsyncHandler(async (req, res) => {
     // find orders for the logged in user
+
     const orders = await Order.find({
       user: req.user._id,
     });
     // send the orders back to the client
     res.send(orders);
+  })
+);
+
+// creates an HTTP POST request handler for the "/" endpoint.
+orderRouter.post(
+  "/",
+  //  middleware function that checks if user has valid authentication credentials.
+  isAuth,
+  //wrapper function to handle any errors that might occur during the execution of the main function.
+  expressAsyncHandler(async (req, res) => {
+    // checks if there are any items in the cart
+    if (req.body.orderItems.length === 0) {
+      res.status(400).send({ message: "Cart is empty" });
+    } else {
+      // create a new order using the Order model
+      const order = new Order({
+        seller: req.body.orderItems[0].seller,
+        orderItems: req.body.orderItems.map((x) => ({ ...x, product: x._id })),
+        shippingAddress: req.body.shippingAddress,
+        paymentMethod: req.body.paymentMethod,
+        itemsPrice: req.body.itemsPrice,
+        shippingPrice: req.body.shippingPrice,
+        taxPrice: req.body.taxPrice,
+        totalPrice: req.body.totalPrice,
+        user: req.user._id,
+      });
+
+      // saves the order instance to the database
+      console.log(order);
+      const createdOrder = await order.save();
+
+      res
+        .status(201)
+        .send({ message: "New Order Created", order: createdOrder });
+    }
+  })
+);
+
+// creates an HTTP GET request handler for the "/id" endpoint.
+orderRouter.get(
+  "/:id", // route parameter represents the id of the order to be fetched
+  isAuth, // middleware function that checks if the user trying to access the route is authenticated
+  // route handler function that fetches the order details and sends it back in the response
+  // route handler function that updates the payment details of an order and sends an email to the user
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id); // finds the order by its id
+    console.log(order);
+    if (order) {
+      // send order
+      res.send(order);
+    } else {
+      // send error message
+      res.status(404).send({ message: "Order Not Found" });
+    }
   })
 );
 

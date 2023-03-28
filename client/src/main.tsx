@@ -10,7 +10,10 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <HelmetProvider>
     <StoreProvider>
       <React.StrictMode>
-        <PayPalScriptProvider deferLoading={true}>
+        <PayPalScriptProvider
+          options={{ "client-id": "test" }}
+          deferLoading={true}
+        >
           <App />
         </PayPalScriptProvider>
       </React.StrictMode>

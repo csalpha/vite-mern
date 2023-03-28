@@ -24,6 +24,8 @@ import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import PrivateRoute from "./components/PrivateRoute";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
+import AdminRoute from "./components/AdminRoute";
+import DashboardScreen from "./screens/DashboardScreen";
 // [] {}
 
 function App() {
@@ -120,21 +122,31 @@ function App() {
               </Link>
               {userInfo ? (
                 <>
-                  <Link to='/profile'>
+                  <Link to='/'>
                     <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                       {"Hello, " + userInfo.name}
                     </li>
                   </Link>
-                  <Link to='/profile'>
-                    <li className={`mx-4 cursor-pointer my-2 text-lg`}>
-                      Profile
-                    </li>
-                  </Link>
+
                   <Link to='/orderhistory'>
                     <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                       Order History
                     </li>
                   </Link>
+                  {userInfo && userInfo.isAdmin && (
+                    <>
+                      <Link to='/profile'>
+                        <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                          Profile
+                        </li>
+                      </Link>
+                      <Link to='/dashboard'>
+                        <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                          Admin Dashboard
+                        </li>
+                      </Link>
+                    </>
+                  )}
                   <Link className='' to='' onClick={signoutHandler}>
                     <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                       Sign Out
@@ -207,21 +219,31 @@ function App() {
                   </Link>
                   {userInfo ? (
                     <>
-                      <Link to='/profile'>
+                      <Link to=''>
                         <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                           {"Hello, " + userInfo.name}
                         </li>
                       </Link>
-                      <Link to='/profile'>
-                        <li className={`mx-4 cursor-pointer my-2 text-lg`}>
-                          Profile
-                        </li>
-                      </Link>
+
                       <Link to='/orderhistory'>
                         <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                           Order History
                         </li>
                       </Link>
+                      {userInfo && userInfo.isAdmin && (
+                        <>
+                          <Link to='/profile'>
+                            <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                              Profile
+                            </li>
+                          </Link>
+                          <Link to='/dashboard'>
+                            <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                              Admin Dashboard
+                            </li>
+                          </Link>
+                        </>
+                      )}
                       <Link className='' to='' onClick={signoutHandler}>
                         <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                           Sign Out
@@ -264,8 +286,20 @@ function App() {
             ></Route>
             <Route
               path='/orderhistory'
-              element={<OrderHistoryScreen />}
+              element={
+                <PrivateRoute>
+                  <OrderHistoryScreen />
+                </PrivateRoute>
+              }
             ></Route>
+            <Route
+              path='/dashboard'
+              element={
+                <AdminRoute>
+                  <DashboardScreen />
+                </AdminRoute>
+              }
+            />
           </Routes>
         </main>
       </div>
