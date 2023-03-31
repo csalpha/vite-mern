@@ -2,6 +2,7 @@
 import express from "express";
 import Product from "../models/productModel.js";
 import expressAsyncHandler from "express-async-handler";
+import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
 
 const productRouter = express.Router();
 
@@ -65,6 +66,45 @@ productRouter.get(
     );
     // Sending the found products as the response
     res.send(products);
+  })
+);
+
+// this code is defining a route handler for a GET request to the "/admin" endpoint
+productRouter.get(
+  "/admin",
+  isAuth, // middleware function that checks if the user trying to access the route is authenticated
+  isSellerOrAdmin, // middleware function that checks if the user trying to access the route has admin/seller privileges
+  // async handler to process the request
+  expressAsyncHandler(async ({ query, user }, res) => {
+    // default page size
+    const pageSize = query.pageSize || PAGE_SIZE;
+
+    // default page number
+    const page = query.page || 1;
+
+    // filter by seller if in seller mode
+    const sellerFilter = query.sellerMode ? { seller: user._id } : {};
+
+    // find products with filter and pagination
+    const products = await Product.find({
+      ...sellerFilter,
+    })
+      .populate("seller", "seller.name seller.logo")
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
+
+    // count total documents with filter
+    const countProducts = await Product.countDocuments({
+      ...sellerFilter,
+    });
+
+    // Send the object back to the client
+    res.send({
+      products,
+      countProducts,
+      page,
+      pages: Math.ceil(countProducts / pageSize),
+    });
   })
 );
 
@@ -227,6 +267,67 @@ productRouter.get(
       countProducts, // Total number of products
       page, // Current page number
       pages: Math.ceil(countProducts / pageSize), // Total number of pages
+    });
+  })
+);
+
+// route handler for deleting a product
+productRouter.delete(
+  "/:id", // route parameter for the id of the product to be deleted
+  isAuth, // middleware function that checks if the user trying to access the route is authenticated
+  isAdmin, // middleware function that checks if the user trying to access the route has admin privileges
+  // The actual route handler function that gets executed when a DELETE request is sent to this endpoint.
+  expressAsyncHandler(async (req, res) => {
+    // // Query for the specific product in the database using the ID passed in as a parameter
+    const product = await Product.findById(req.params.id);
+
+    // If the product exists in the database, remove it and send a response indicating a successful deletion
+    if (product) {
+      const deleteProduct = await product.remove();
+
+      res.send({
+        message: "Product Deleted",
+        product: deleteProduct,
+      });
+    } else {
+      // If the product does not exist in the database, send a 404 error response with an appropriate error message.
+      res.status(404).send({
+        message: "Product Not Found",
+      });
+    }
+  })
+);
+
+// route handler for create product
+productRouter.post(
+  "/", // The endpoint URL for creating a new product
+  isAuth, // A middleware function that checks if the user has been authenticated before allowing access to this endpoint
+  isSellerOrAdmin, // A middleware function that checks if the user is a seller or an admin before allowing access to this endpoint
+  expressAsyncHandler(async (req, res) => {
+    // The actual route handler function that gets executed when a POST request is sent to this endpoint.
+
+    // Create a new product object
+    const product = new Product({
+      name: "sample name " + Date.now(),
+      slug: "sample-name-" + Date.now(),
+      seller: req.user._id, // Set the seller of the product as the current user
+      image: "/images/p1.jpg",
+      price: 0,
+      category: "sample category",
+      brand: "sample brand",
+      countInStock: 0,
+      rating: 0,
+      numReviews: 0,
+      description: "sample description",
+    });
+
+    // Save the product in the database
+    const createdProduct = await product.save();
+
+    // Send a response indicating that the product was successfully created
+    res.send({
+      message: "Product Created",
+      product: createdProduct,
     });
   })
 );

@@ -98,11 +98,16 @@ orderRouter.put(
   })
 );
 
+// Define a GET endpoint '/summary' using the orderRouter object.
+// It fetches and groups data from different MongoDB collections such as
+// order, user, and product, and sends it back as a response in JSON format.
 orderRouter.get(
-  "/summary",
-  isAuth,
-  isAdmin,
+  "/summary", // route path
+  isAuth, // middleware function that checks if the user trying to access the route is authenticated
+  isAdmin, // middleware function that checks if the user trying to access the route has admin privileges
+  // Define an async handler function to fetch summary data from the database.
   expressAsyncHandler(async (req, res) => {
+    // Use MongoDB's aggregate function to group the order collection into an array of documents with only the fields specified.
     const orders = await Order.aggregate([
       {
         $group: {
@@ -112,6 +117,8 @@ orderRouter.get(
         },
       },
     ]);
+
+    // Use MongoDB's aggregate function to group the user collection into an array of documents with only the fields specified.
     const users = await User.aggregate([
       {
         $group: {
@@ -120,16 +127,22 @@ orderRouter.get(
         },
       },
     ]);
+
+    // Use MongoDB's aggregate function to group the order collection into an array of documents with only the fields specified.
     const dailyOrders = await Order.aggregate([
       {
         $group: {
+          // use $dateToString operator to convert createdAt date to string in the format %Y-%m-%d
           _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
           orders: { $sum: 1 },
           sales: { $sum: "$totalPrice" },
         },
       },
+      // Sort the aggregated data by date.
       { $sort: { _id: 1 } },
     ]);
+
+    // Use MongoDB's aggregate function to group the product collection into an array of documents with only the fields specified.
     const productCategories = await Product.aggregate([
       {
         $group: {
@@ -138,6 +151,8 @@ orderRouter.get(
         },
       },
     ]);
+
+    // Send the fetched summary data back in JSON format as a response to the GET request.
     res.send({ users, orders, dailyOrders, productCategories });
   })
 );

@@ -103,3 +103,9 @@
     1. Create a functional component called AdminRoute
 
 26. Build Admin Dashboard
+
+    1. Create a functional component called Dashboard Screen
+
+27. Build Product List Screen
+
+    1. Create a functional component called Product List Screen

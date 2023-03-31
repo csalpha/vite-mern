@@ -18,89 +18,105 @@ import {
   Legend,
 } from "chart.js";
 
-// [] {}
-
+// A reducer function takes in two parameters, state and action,
+// and returns a new state based on the provided action.
 const reducer = (state, action) => {
+  // handle different types of actions.
   switch (action.type) {
     case "FETCH_REQUEST":
+      //  Returns a new state object
       return {
-        ...state,
-        loading: true,
+        ...state, // creating a copy of the current state
+        loading: true, // sets the loading flag to true
       };
     case "FETCH_SUCCESS":
+      //  Returns a new state object
       return {
-        ...state,
-        summary: action.payload,
-        loading: false,
+        ...state, // creating a copy of the current state
+        summary: action.payload, // sets the summary value based on the payload data
+        loading: false, // sets the loading flag to false
       };
     case "FETCH_FAIL":
+      //  Returns a new state object
       return {
-        ...state,
-        loading: false,
-        error: action.payload,
+        ...state, // creating a copy of the current state
+        loading: false, // sets the loading flag to false
+        error: action.payload, // sets the error value based on the payload data
       };
+    // The default statement
     default:
+      // returns the current state
       return state;
   }
 };
 
+// Create a functional component called DashboardScreen
 const DashboardScreen = () => {
-  const [{ loading, summary, error }, dispatch] = useReducer(reducer, {
-    loading: true,
-    summary: { salesData: [] },
-    error: "",
-  });
-
-  const {
-    state, // get state from useContext
-  } = useContext(
-    Store // pass parameter
+  // destructuring the state and dispatch from useReducer hook
+  const [{ loading, summary, error }, dispatch] = useReducer(
+    reducer, // reducer
+    {
+      loading: true, // sets loading flag to true
+      error: "", // sets error to an empty string
+    }
   );
 
-  const {
-    userInfo, // get userInfo from state
-  } = state;
+  //  destructuring state object from Store Context
+  const { state } = useContext(Store);
 
-  // define useEffect
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
-      try {
-        const { data } = await Axios.get(`/api/orders/summary`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-        dispatch({ type: "FETCH_SUCCESS", payload: data });
-      } catch (error) {
-        dispatch({
-          type: "FETCH_FAIL",
-          payload: getError(error),
-        });
-      }
-    };
-    fetchData();
-  }, [dispatch, userInfo]);
+  // Destructuring userInfo from the state object
+  const { userInfo } = state;
+
+  // using useEffect hook to fetch order summary data from an API endpoint
+  useEffect(
+    () => {
+      // Define an asynchronous function called fetchData()
+      const fetchData = async () => {
+        // Dispatches a "FETCH_REQUEST" action to update the state to indicate that data fetching has started.
+        dispatch({ type: "FETCH_REQUEST" });
+        try {
+          // Makes a GET request to the server with a bearer token authorization header to access sensitive user data.
+          const { data } = await Axios.get(`/api/orders/summary`, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          });
+          /* If the GET request is successful, then the data fetched will be 
+        dispatched to the state through the "FETCH_SUCCESS" action type   */
+          dispatch({ type: "FETCH_SUCCESS", payload: data });
+        } catch (error) {
+          // If there is an error while making the GET request, then
+          // an "FETCH_FAIL" action type will be dispatched to the state
+          // and an error message will be returned for display. */
+          dispatch({
+            //"FETCH_FAIL" action type will be dispatched to the state
+            type: "FETCH_FAIL",
+            payload: getError(error),
+          });
+        }
+      };
+      // Call the fetchData function defined earlier.
+      fetchData();
+    },
+    // Add dispatch and userInfo as dependencies to the useEffect hook
+    // Whenever a dependency changes, this hook will rerun the code inside it.
+    [dispatch, userInfo]
+  );
 
   return (
     //  [] {}
     <div className='grid  md:grid-cols-4 md:gap-5'>
       <div>
-        {/* create ul */}
         <ul>
-          {/* first li */}
           <li>
             <Link to='/admin/dashboard'>
               <a className='font-bold'>Dashboard</a>
             </Link>
           </li>
-          {/* second li */}
           <li>
             <Link to='/admin/orders'>Orders</Link>
           </li>
-          {/* third li */}
           <li>
-            <Link to='/admin/products'>Products</Link>
+            <Link to='/productlist'>Products</Link>
           </li>
-          {/* fourth li */}
           <li>
             <Link to='/admin/users'>Users</Link>
           </li>

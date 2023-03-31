@@ -26,6 +26,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import AdminRoute from "./components/AdminRoute";
 import DashboardScreen from "./screens/DashboardScreen";
+import ProductEditScreen from "./screens/ProductEditScreen";
+import ProductListScreen from "./screens/ProductListScreen";
 // [] {}
 
 function App() {
@@ -265,7 +267,19 @@ function App() {
         <main className='container m-auto mt-4 px-4'>
           <Carousel showArrows autoPlay showThumbs={false}></Carousel>
           <Routes>
+            <Route
+              path='/productlist'
+              element={
+                <AdminRoute>
+                  <ProductListScreen />
+                </AdminRoute>
+              }
+            />
             <Route path='/product/:id' element={<ProductScreen />}></Route>
+            <Route
+              path='/product/:id/edit'
+              element={<ProductEditScreen />}
+            ></Route>
             <Route path='/' element={<HomeScreen />}></Route>
             <Route path='/seller/:id' element={<SellerScreen />}></Route>
             <Route path='/cart' element={<CartScreen />}></Route>
@@ -300,6 +314,10 @@ function App() {
                 </AdminRoute>
               }
             />
+            <Route
+              path='/product/:id/edit'
+              element={<ProductEditScreen />}
+            ></Route>
           </Routes>
         </main>
       </div>
