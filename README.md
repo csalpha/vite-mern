@@ -109,3 +109,7 @@
 27. Build Product List Screen
 
     1. Create a functional component called Product List Screen
+
+28. Build Product Edit Screen
+
+    1. Create a functional component called Product Edit Screen

@@ -80,6 +80,7 @@ const reducer = (state, action) => {
   }
 };
 
+// Create a functional component called ProductListScreen
 const ProductListScreen = () => {
   // destructuring the state and dispatch from useReducer hook
   const [
@@ -244,7 +245,7 @@ const ProductListScreen = () => {
           <title>Products</title>
         </Helmet>
         <div className='md:col-span-3'>
-          <h1 className='mb-4 text-xl'>Admin Dashboard</h1>
+          <h1 className='mb-4 text-xl'>Admin Products</h1>
         </div>
         <div className='col-span-3 text-end'>
           <div>
