@@ -206,57 +206,48 @@ const ProductEditScreen = () => {
     }
   };
 
-  /*handles the upload of a single file */
-  const uploadFileHandler = async (
-    e, // event
-    forImages // uploaded file is a image or not?
-  ) => {
-    // extracts the file object from the event
+  // This function is used to handle file uploads for images and non-image files
+  // It takes in an event and a boolean forImages indicating whether the upload is for an image or not
+  const uploadFileHandler = async (e, forImages) => {
+    // // Get the uploaded file from the event object
     const file = e.target.files[0];
 
-    // creates a new FormData object
+    // Create a new FormData object to send the file data to the server
     const bodyFormData = new FormData();
 
-    bodyFormData.append("image", file);
-
-    /* dispatches an action of type "UPLOAD_REQUEST" */
-    dispatch({ type: "UPLOAD_REQUEST" });
+    bodyFormData.append("file", file);
     try {
-      /* send a POST request to the '/api/uploads' endpoint of a backend API  */
-      const { data } = await Axios.post(
-        "/api/uploads", // endpoint
-        bodyFormData, // image
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // request body contains binary data
-            Authorization: `Bearer ${userInfo.token}`, // authorization token
-          },
-        }
-      );
-      /* If the POST request is successful */
+      // Dispatch an action to indicate that an upload request is in progress
+      dispatch({ type: "UPLOAD_REQUEST" });
 
-      /* If forImages is true */
+      // Send a POST request to the server with the file data
+      const { data } = await Axios.post("/api/upload", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // request body contains binary data
+          authorization: `Bearer ${userInfo.token}`, // authorization token
+        },
+      });
+      // Dispatch an action to indicate that the upload was successful
+      dispatch({ type: "UPLOAD_SUCCESS" });
+
+      // If the upload is for an image, .
+
       if (forImages) {
-        // adds the file data to the images array using the setImages function
-        setImages([...images, data]);
+        // add the new image URL to the images array using the spread operator
+        setImages([...images, data.secure_url]);
       } else {
-        // sets the file data as the image state variable
-        setImage(data);
+        // Otherwise, set the image URL to the returned secure_url
+        setImage(data.secure_url);
       }
 
-      /* displays a success toast message */
-      toast.success("Image uploaded sucessfully. Click update to apply it.");
+      // Show a success toast notification
+      toast.success("Image uploaded successfully. click Update to apply it");
+    } catch (err) {
+      // Show an error toast notification
+      toast.error(getError(err));
 
-      /* dispatches an action of type "UPLOAD_SUCCESS" */
-      dispatch({ type: "UPLOAD_SUCCESS" });
-    } catch (error) {
-      /* If the POST request fails */
-
-      /*  displays an error toast message */
-      toast.error(getError(error));
-
-      /* dispatches an action of type "UPLOAD_FAIL" */
-      dispatch({ type: "UPLOAD_FAIL" });
+      // dispatch an action to indicate that the upload failed
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
     }
   };
 

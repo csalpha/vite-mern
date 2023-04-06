@@ -113,3 +113,5 @@
 28. Build Product Edit Screen
 
     1. Create a functional component called Product Edit Screen
+
+29. Upload Multiple Images

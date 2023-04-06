@@ -12,8 +12,6 @@ import MessageBox from "../components/MessageBox";
 import { Store } from "../Store";
 import Rating from "../components/Rating";
 
-// { } []
-
 const reducer = (state, action) => {
   // The reducer function depending on the action type
   switch (action.type) {
@@ -185,6 +183,26 @@ const ProductScreen = () => {
               Add to cart
             </button>
           </div>
+        </div>
+      </div>
+      {console.log(product.images)}
+
+      <div>
+        <div xs={1} md={2} className='g-2'>
+          {[product.image, ...product.images].map((x) => (
+            <div key={x}>
+              <div>
+                <button
+                  className='thumbnail'
+                  type='button'
+                  variant=''
+                  onClick={() => setSelectedImage(x)}
+                >
+                  <img variant='top' src={x} alt='product' />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <div className='my-3'>

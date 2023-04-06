@@ -5,6 +5,8 @@ import userRouter from "./routes/userRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import path from "path";
+import uploadRouter from "./routes/uploadRoutes.js";
 
 // {} []
 
@@ -32,6 +34,8 @@ mongoose
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.log(err));
 
+app.use("/api/upload", uploadRouter);
+
 // Registers the productRouter under "/api/products".
 app.use("/api/products", productRouter);
 
@@ -49,6 +53,22 @@ app.get(
         "sb" // a default string
     );
   }
+);
+
+// define __dirname (absolute path)
+// resolve a sequence of path-segments to an absolute path
+const __dirname = path.resolve();
+
+app.use(
+  "/uploads", // path
+  // creates an express app that serves static files
+  express.static(
+    // join all arguments together and normalize the resulting path
+    path.join(
+      __dirname, // absolute path
+      "/upload" // path
+    )
+  ) // callback
 );
 
 /* Starts the server listening on the specified port 
