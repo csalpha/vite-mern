@@ -162,4 +162,18 @@ userRouter.put(
   })
 );
 
+// defining a route for the GET request method on the root URL ("/")
+userRouter.get(
+  "/",
+  isAuth, // Middleware function to ensure the user is authenticated
+  isAdmin, // Middleware function to ensure the user has admin privileges
+  // // Async handler function that processes the request and sends the response
+  expressAsyncHandler(async (req, res) => {
+    // find all users in the database
+    const users = await User.find({});
+    // send a response to the client with the users data
+    res.send(users);
+  })
+);
+
 export default userRouter;
