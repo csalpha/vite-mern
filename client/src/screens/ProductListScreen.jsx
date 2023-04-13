@@ -227,7 +227,7 @@ const ProductListScreen = () => {
             <Link to='/dashboard'>Dashboard</Link>
           </li>
           <li>
-            <Link to='/orders'>Orders</Link>
+            <Link to='/orderhistory'>Orders</Link>
           </li>
           <li>
             <Link to='/productlist'>
@@ -235,7 +235,7 @@ const ProductListScreen = () => {
             </Link>
           </li>
           <li>
-            <Link to='/users'>Users</Link>
+            <Link to='/userlist'>Users</Link>
           </li>
         </ul>
       </div>

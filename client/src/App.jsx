@@ -28,6 +28,8 @@ import AdminRoute from "./components/AdminRoute";
 import DashboardScreen from "./screens/DashboardScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
+import UserListScreen from "./screens/UserListScreen";
+
 // [] {}
 
 function App() {
@@ -311,6 +313,14 @@ function App() {
               element={
                 <AdminRoute>
                   <DashboardScreen />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path='/userlist'
+              element={
+                <AdminRoute>
+                  <UserListScreen />
                 </AdminRoute>
               }
             />

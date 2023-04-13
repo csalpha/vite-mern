@@ -112,13 +112,13 @@ const DashboardScreen = () => {
             </Link>
           </li>
           <li>
-            <Link to='/admin/orders'>Orders</Link>
+            <Link to='/orderhistory'>Orders</Link>
           </li>
           <li>
             <Link to='/productlist'>Products</Link>
           </li>
           <li>
-            <Link to='/admin/users'>Users</Link>
+            <Link to='/userlist'>Users</Link>
           </li>
         </ul>
       </div>
@@ -135,7 +135,7 @@ const DashboardScreen = () => {
                 <div className='card m-5 p-5'>
                   <p className='text-3xl'>{summary.users[0].numUsers}</p>
                   <p className=''>Users</p>
-                  <Link to='/admin/users'>View users</Link>
+                  <Link to='/userlist'>View users</Link>
                 </div>
               </div>
 

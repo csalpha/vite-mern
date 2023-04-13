@@ -115,3 +115,11 @@
     1. Create a functional component called Product Edit Screen
 
 29. Upload Multiple Images
+
+30. Buid Users List Screen
+
+    1. Create a functional component called Users List Screen
+    2. Define a reducer function that manages the state of a user list in an application
+    3. Define useEffect hook that fetch data from an API when the component mounts and every time its dependencies change
+    4. Define a function for delete a user from the backend
+    5. Define a route for the GET request method on the root URL ("/") of a user router in an Express.js application
