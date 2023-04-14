@@ -162,17 +162,84 @@ userRouter.put(
   })
 );
 
-// defining a route for the GET request method on the root URL ("/")
+// defining a route for the GET request on the specified URL ("/") enpoint
 userRouter.get(
-  "/",
+  "/", // enpoint
   isAuth, // Middleware function to ensure the user is authenticated
   isAdmin, // Middleware function to ensure the user has admin privileges
-  // // Async handler function that processes the request and sends the response
+  // Async handler function that processes the request and sends the response
   expressAsyncHandler(async (req, res) => {
     // find all users in the database
     const users = await User.find({});
     // send a response to the client with the users data
     res.send(users);
+  })
+);
+
+// defining a route for the delete request method on the root URL ("/:id") enpoint
+userRouter.delete(
+  "/:id", // the route handler function expects an ID parameter in the URL path
+  isAuth, // Middleware function to ensure the user is authenticated
+  isAdmin, // Middleware function to ensure the user has admin privileges
+  // Async handler function that processes the request and sends the response
+  expressAsyncHandler(async (req, res) => {
+    // Find the user by their id
+    const user = await User.findById(req.params.id);
+
+    // If the user is found
+    if (user) {
+      // the function checks whether the user is the admin user.
+      if (user.email === "carlos@mail.com") {
+        // sends a 400 error response and message.
+        res.status(400).send({ message: "Can Not Delete Admin User" });
+        return;
+      }
+
+      // If the user is not the admin user
+      // it calls the Mongoose remove method to delete the user from the database.
+      const deleteUser = await user.remove();
+
+      // If the deletion is successful,
+      // it sends  a response to the client
+      // with a success message and the deleted user object
+      res.send({ message: "User Deleted", user: deleteUser });
+    } else {
+      // If the user is not found,
+      // it sends a 404 error response and message.
+      res.status(404).send({ message: "User Not Found" });
+    }
+  })
+);
+// defining a route for the put request method on the root URL ("/:id") enpoint
+userRouter.put(
+  "/:id", //the route handler function expects an ID parameter in the URL path
+  isAuth, // Middleware function to ensure the user is authenticated
+  isAdmin, // Middleware function to ensure the user has admin privileges
+  // Async handler function that processes the request and sends the response
+  expressAsyncHandler(async (req, res) => {
+    // Find the user by their id
+    const user = await User.findById(req.params.id);
+
+    // If the user is found
+    if (user) {
+      // the function updates the user's properties based on the request body
+      // If a property is not provided in the request body,
+      // it keeps the existing property value.
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.isSeller = Boolean(req.body.isSeller);
+      user.isAdmin = Boolean(req.body.isAdmin);
+      // user.isAdmin = req.body.isAdmin || user.isAdmin;
+      const updatedUser = await user.save();
+
+      // If the update is successful,
+      // it sends a success message and the updated user object in the response.
+      res.send({ message: "User Updated", user: updatedUser });
+    } else {
+      // If the user is not found,
+      // it sends a 404 error response and message.
+      res.status(404).send({ message: "User Not Found" });
+    }
   })
 );
 

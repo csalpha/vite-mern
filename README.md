@@ -118,8 +118,16 @@
 
 30. Buid Users List Screen
 
-    1. Create a functional component called Users List Screen
+    1. Create a functional component called UsersListScreen
     2. Define a reducer function that manages the state of a user list in an application
     3. Define useEffect hook that fetch data from an API when the component mounts and every time its dependencies change
     4. Define a function for delete a user from the backend
-    5. Define a route for the GET request method on the root URL ("/") of a user router in an Express.js application
+    5. Define a route for the GET request method on the specified URL endpoint ("/") of a user router in an Express.js application
+
+31. Build User Edit Screen
+
+    1. Create a functional component called UserEditScreen
+    2. Define a reducer function that manages the state of a user in an application
+    3. Define useEffect hook that fetch data from an API when the component mounts and every time its dependencies change
+    4. Define a function for update users
+    5. Define a route for the put request method on the specified URL endpoint ("/:id") of a user router in an Express.js application

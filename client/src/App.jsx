@@ -29,6 +29,7 @@ import DashboardScreen from "./screens/DashboardScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import UserListScreen from "./screens/UserListScreen";
+import UserEditScreen from "./screens/UserEditScreen";
 
 // [] {}
 
@@ -326,8 +327,21 @@ function App() {
             />
             <Route
               path='/product/:id/edit'
-              element={<ProductEditScreen />}
-            ></Route>
+              element={
+                <AdminRoute>
+                  <ProductEditScreen />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path='/user/:id/edit'
+              element={
+                <AdminRoute>
+                  <UserEditScreen />
+                </AdminRoute>
+              }
+            />
           </Routes>
         </main>
       </div>

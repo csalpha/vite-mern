@@ -73,7 +73,8 @@ const UserListScreen = () => {
     } // initial state object
   );
 
-  // The useNavigate hook allows for programmatic navigation.
+  // The useNavigate hook allows for programmatic navigation
+  // between different routes in a React application.
   const navigate = useNavigate();
 
   //  destructuring state object from Store Context

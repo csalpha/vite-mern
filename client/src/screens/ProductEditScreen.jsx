@@ -305,6 +305,7 @@ const ProductEditScreen = () => {
             <div className='mb-4'>
               <label htmlFor='name'>Name</label>
               <input
+                className='w-full'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -313,6 +314,7 @@ const ProductEditScreen = () => {
             <div className='mb-4' controlId='slug'>
               <label>Slug</label>
               <input
+                className='w-full'
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
                 required
@@ -321,6 +323,7 @@ const ProductEditScreen = () => {
             <div className='mb-4' controlId='name'>
               <label>Price</label>
               <input
+                className='w-full'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
@@ -329,6 +332,7 @@ const ProductEditScreen = () => {
             <div className='mb-4' controlId='image'>
               <label>Image File</label>
               <input
+                className='w-full'
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
                 required
@@ -354,18 +358,27 @@ const ProductEditScreen = () => {
             </div>
             <div className='mb-4' controlId='additionalImageFile'>
               <label>Upload Aditional Image</label>
-              <input type='file' onChange={(e) => uploadFileHandler(e, true)} />
+              <input
+                className='w-full'
+                type='file'
+                onChange={(e) => uploadFileHandler(e, true)}
+              />
               {loadingUpload && <LoadingBox></LoadingBox>}
             </div>
 
             <div className='mb-4' controlId='imageFile'>
               <label>Upload Image</label>
-              <input type='file' onChange={uploadFileHandler} />
+              <input
+                className='w-full'
+                type='file'
+                onChange={uploadFileHandler}
+              />
               {loadingUpload && <LoadingBox></LoadingBox>}
             </div>
             <div className='mb-4' controlId='category'>
               <label>Category</label>
               <input
+                className='w-full'
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
@@ -374,6 +387,7 @@ const ProductEditScreen = () => {
             <div className='mb-4' controlId='brand'>
               <label>Brand</label>
               <input
+                className='w-full'
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
                 required
@@ -382,6 +396,7 @@ const ProductEditScreen = () => {
             <div className='mb-4' controlId='countInStock'>
               <label>Count In Stock</label>
               <input
+                className='w-full'
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
                 required
@@ -390,6 +405,7 @@ const ProductEditScreen = () => {
             <div className='mb-4' controlId='description'>
               <label>Description</label>
               <input
+                className='w-full'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
@@ -397,7 +413,11 @@ const ProductEditScreen = () => {
             </div>
 
             <div className='mb-4'>
-              <button disabled={loadingUpdate} type='submit'>
+              <button
+                disabled={loadingUpdate}
+                type='submit'
+                className='primary-button'
+              >
                 Update
               </button>
               {loadingUpdate && <LoadingBox></LoadingBox>}
