@@ -7,6 +7,35 @@ import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
 
 const orderRouter = express.Router();
 
+// creates an  get request handler for the "/" endpoint using the Express.js framework
+orderRouter.get(
+  "/",
+  isAuth, // middleware function that checks if the user trying to access the route is authenticated
+  isSellerOrAdmin, // A middleware function that checks if the user trying to access the route has seller/admin privileges.
+  // route handler function that fetches data and sends it back in the response
+  expressAsyncHandler(async (req, res) => {
+    /* create a sellerFilter object, which will be used 
+       to filter the orders returned by the query.      */
+    const sellerFilter =
+      // If the sellerMode query parameter is present in the request
+      req.query.sellerMode
+        ? // set the seller field of the filter to the current user's ID (req.user._id).
+          { seller: req.user._id }
+        : // otherwise, the sellerFilter object will be an empty object,
+          // which will not filter the results.
+          {};
+
+    // Query the database for orders matching the seller filter, if provided.
+    const orders = await Order.find({ ...sellerFilter }).populate(
+      // Populate the "user" field with the user's name for each order.
+      "user",
+      "name"
+    );
+    // send the data back in the response
+    res.send(orders);
+  })
+);
+
 /* this code processes an HTTP POST request for creating a new order, 
 making sure all required fields are given, and saving it on the database. */
 
@@ -16,7 +45,7 @@ making sure all required fields are given, and saving it on the database. */
 /* This code defines a route handler function for updating 
    the payment details of an order with the given id.      */
 
-// creates an  PUT request handler for the "/id/pay" endpoint.
+// creates an  PUT request handler for the "/id/pay" endpoint using the Express.js framework
 orderRouter.put(
   "/:id/pay", // route parameter represents the id of the order to be updated with payment details
   isAuth, // middleware function that checks if the user trying to access the route is authenticated
@@ -75,7 +104,7 @@ orderRouter.put(
 
 /* This code creates a PUT request handler for the /id/deliver endpoint  */
 
-// creates an  PUT request handler for the "/id/deliver" endpoint.
+// creates an  PUT request handler for the "/id/deliver" endpoint using the Express.js framework
 orderRouter.put(
   "/:id/deliver", // route parameter represents the id of the order to be marked as delivered
   isAuth, // middleware function that checks if the user trying to access the route is authenticated
@@ -98,7 +127,7 @@ orderRouter.put(
   })
 );
 
-// Define a GET endpoint '/summary' using the orderRouter object.
+// Define a GET endpoint '/summary' using the Express.js framework
 // It fetches and groups data from different MongoDB collections such as
 // order, user, and product, and sends it back as a response in JSON format.
 orderRouter.get(
@@ -172,7 +201,7 @@ orderRouter.get(
   })
 );
 
-// creates an HTTP POST request handler for the "/" endpoint.
+// creates an HTTP POST request handler for the "/" endpoint using the Express.js framework
 orderRouter.post(
   "/",
   //  middleware function that checks if user has valid authentication credentials.
@@ -207,7 +236,7 @@ orderRouter.post(
   })
 );
 
-// creates an HTTP GET request handler for the "/id" endpoint.
+// creates an HTTP GET request handler for the "/id" endpoint using the Express.js framework
 orderRouter.get(
   "/:id", // route parameter represents the id of the order to be fetched
   isAuth, // middleware function that checks if the user trying to access the route is authenticated

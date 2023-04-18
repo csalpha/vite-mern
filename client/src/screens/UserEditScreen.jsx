@@ -189,7 +189,7 @@ const UserEditScreen = (props) => {
             <Link to='/dashboard'>Dashboard</Link>
           </li>
           <li>
-            <Link to='/orders'>Orders</Link>
+            <Link to='/orderlist'>Orders</Link>
           </li>
           <li>
             <Link to='/productlist'>Products</Link>

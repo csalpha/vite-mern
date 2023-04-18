@@ -107,12 +107,12 @@ const DashboardScreen = () => {
       <div>
         <ul>
           <li>
-            <Link to='/admin/dashboard'>
+            <Link to='/dashboard'>
               <a className='font-bold'>Dashboard</a>
             </Link>
           </li>
           <li>
-            <Link to='/orderhistory'>Orders</Link>
+            <Link to='/orderlist/seller'>Orders</Link>
           </li>
           <li>
             <Link to='/productlist'>Products</Link>

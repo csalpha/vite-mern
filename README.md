@@ -131,3 +131,11 @@
     3. Define useEffect hook that fetch data from an API when the component mounts and every time its dependencies change
     4. Define a function for update users
     5. Define a route for the put request method on the specified URL endpoint ("/:id") of a user router in an Express.js application
+
+32. Build Order List Screen
+
+    1. Create a functional component called Order List Screen
+    2. Define a reducer function that takes in two parameters, state and action, and returns a new state based on the provided action.
+    3. Define useEffect hook that fetch data from an API when the component mounts and every time its dependencies change
+    4. Define a function for delete a order from the backend
+    5. Creates a GET request handler for the "/" endpoint using the Express.js framework.
