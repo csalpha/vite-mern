@@ -97,7 +97,7 @@ app.get(
       // join all arguments together and normalize the resulting path
       path.join(
         __dirname, // absolute path
-        "../../client/dist/index.html" // path
+        "/client/dist/index.html" // path
       )
     ) // callback
 );
