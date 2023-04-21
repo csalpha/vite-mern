@@ -81,7 +81,7 @@ app.use(
     // join all arguments together and normalize the resulting path
     path.join(
       __dirname, // absolute path
-      "../../client/dist" // path
+      "/client/dist" // path
     )
   ) // callback
 );
