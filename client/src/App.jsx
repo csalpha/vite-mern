@@ -32,6 +32,8 @@ import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import SellerRoute from "./components/SellerRoute";
+import SupportScreen from "./screens/SupportScreen";
+import ChatBox from "./components/ChatBox";
 
 // [] {}
 
@@ -152,6 +154,11 @@ function App() {
                           Admin Dashboard
                         </li>
                       </Link>
+                      <Link to='/support'>
+                        <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                          Support
+                        </li>
+                      </Link>
                     </>
                   )}
                   <Link className='' to='' onClick={signoutHandler}>
@@ -247,6 +254,11 @@ function App() {
                           <Link to='/dashboard'>
                             <li className={`mx-4 cursor-pointer my-2 text-lg`}>
                               Admin Dashboard
+                            </li>
+                          </Link>
+                          <Link to='/support'>
+                            <li className={`mx-4 cursor-pointer my-2 text-lg`}>
+                              Support
                             </li>
                           </Link>
                         </>
@@ -352,8 +364,21 @@ function App() {
                 </AdminRoute>
               }
             />
+
+            <Route
+              path='/support'
+              element={
+                <AdminRoute>
+                  <SupportScreen />
+                </AdminRoute>
+              }
+            />
           </Routes>
         </main>
+        {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+        <div className='text-center'>
+          <i className='fas fa-ellipsis-h'>chat</i>
+        </div>
       </div>
     </BrowserRouter>
   );
